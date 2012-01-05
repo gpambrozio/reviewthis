@@ -12,9 +12,8 @@ configure do
    }
    
   # regex's
-  USER = /[^a-z0-9_]@([a-z0-9_]+)/i
-  HASH = /[^a-z0-9_]#([a-z0-9_]+)/i # not used yet, but perhaps soon?
-  REVIEW = /[^a-z0-9_](#reviewthis)[^a-z0-9_]+/i
+  USER = /[^a-z0-9_]@([a-z0-9_]+)\b/i
+  REVIEW = /[^a-z0-9_]#review\b/i
   EMAIL = /\b([A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4})\b/i
 end
 
