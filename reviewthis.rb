@@ -59,9 +59,9 @@ get '/' do
     :commit_timestamp => 1234,
     :commit_relative_time => "2012-01-01",
     :commit_author => "test",
-    :commit_url => "test",
+    :commit_url => "http://github.com",
     :repo_name => "test",
-    :repo_url => "test",
+    :repo_url => "http://github.com",
     :username => "test",
     :email => params[:testemail],
   }
