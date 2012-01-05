@@ -52,20 +52,22 @@ end
 
 # test!
 get '/' do
+  if !params[:testemail].nil?
+    vars = {
+      :commit_id => "1234",
+      :commit_message => "message",
+      :commit_timestamp => 1234,
+      :commit_relative_time => "2012-01-01",
+      :commit_author => "test",
+      :commit_url => "http://github.com",
+      :repo_name => "test",
+      :repo_url => "http://github.com",
+      :username => "test",
+      :email => params[:testemail],
+    }
+    mail(vars)
+  end
   "#reviewthis @github!"
-  vars = {
-    :commit_id => "1234",
-    :commit_message => "message",
-    :commit_timestamp => 1234,
-    :commit_relative_time => "2012-01-01",
-    :commit_author => "test",
-    :commit_url => "http://github.com",
-    :repo_name => "test",
-    :repo_url => "http://github.com",
-    :username => "test",
-    :email => params[:testemail],
-  }
-  mail(vars)
 end
 
 # the meat
