@@ -3,7 +3,6 @@ require 'sinatra'
 require 'json'
 require 'mustache/sinatra'
 require 'pony'
-require 'octopussy'
 
 configure do
   set :mustache, {
@@ -20,7 +19,8 @@ end
 # production vars
 configure :production do
   # only run on Heroku
-  set :from, ENV['SENDGRID_USERNAME']
+  set :from, 'development@getarrived.com'
+  set :domain, 'getarrived.com'
   set :via, :smtp
   set :via_options, {
     :address        => "smtp.sendgrid.net",
@@ -62,7 +62,7 @@ get '/' do
       :repo_name => "test",
       :repo_url => "http://github.com",
       :username => "test",
-      :email => params[:testemail],
+      :email => "#{params[:testemail]}@#{options.domain}",
     }
     mail(vars)
   end
@@ -93,18 +93,17 @@ post '/' do
         :repo_url => push['repository']['url'],        
       }
       
-      # let's find all the github users
+      # Send to our users
       message.scan(USER) do |username|
-        user = Octopussy.user(username) # get the github user info
-        vars[:username] = user.name
-        vars[:email] = user.email
+        vars[:username] = username[0]
+        vars[:email] = "#{username[0]}@#{options.domain}"
         mail(vars)
       end
     
       # now let's find any email addresses
       message.scan(EMAIL) do |email|
-        vars[:username] = email
-        vars[:email] = email
+        vars[:username] = email[0]
+        vars[:email] = email[0]
         mail(vars)
       end
   
